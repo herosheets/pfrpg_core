@@ -10,7 +10,7 @@ module PfrpgCore
       final = []
       no_stacking = effects_hash(@effects)
       no_stacking.keys.each do |key|
-        if Tables::Bonus.stackable?(key) || Tables::Bonus.special?(key)
+        if PfrpgTables::Tables::Bonus.stackable?(key) || PfrpgTables::Tables::Bonus.special?(key)
           final << no_stacking[key]
         else
           final << find_max(no_stacking[key])
