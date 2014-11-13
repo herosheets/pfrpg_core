@@ -1,6 +1,7 @@
 module PfrpgCore
 end
 
+require 'pfrpg_core/alignment'
 require 'pfrpg_core/effect'
 require 'pfrpg_core/effect_processor'
 require 'pfrpg_core/math_helper'
