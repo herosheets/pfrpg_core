@@ -14,7 +14,7 @@ class Helper
     end
 
     def default_feats
-      [ PsuedoFeat.new('Feat1') ]
+      [ MockFeat.new('Feat1') ]
     end
   end
 end

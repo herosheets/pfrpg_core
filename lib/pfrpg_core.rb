@@ -3,6 +3,8 @@ end
 
 require 'pfrpg_core/affectable'
 require 'pfrpg_core/alignment'
+require 'pfrpg_core/attributes'
+require 'pfrpg_core/character'
 require 'pfrpg_core/dice'
 require 'pfrpg_core/effect'
 require 'pfrpg_core/effect_processor'
