@@ -109,6 +109,17 @@ class SkillsTest < Minitest::Test
     assert skills.skills_per_level == 5
   end
 
+  def test_skills_per_level_favored
+    skills = PfrpgCore::Skills.new(
+        @skills,
+        MockAttributes.new(-1),
+        MockRace.new('Human'),
+        MockLevel.new(10, 5, 'skill'),
+        PfrpgCore::Bonuses.new
+    )
+    assert skills.skills_per_level == 6
+  end
+
   def test_validate_skill_quantity
     skills = PfrpgCore::Skills.new(
         @skills,

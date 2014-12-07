@@ -24,4 +24,8 @@ class AlignmentTest < Minitest::Test
     assert PfrpgCore::Alignment.any_evil.include? 'Lawful Evil'
   end
 
+  def test_obj
+    assert PfrpgCore::Alignment.new('CN').alignment == 'Chaotic Neutral'
+  end
+
 end

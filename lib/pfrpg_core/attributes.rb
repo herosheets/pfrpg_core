@@ -77,5 +77,27 @@ module PfrpgCore
     def get_modifier(val)
       return ((val - 10) / 2.0).floor
     end
+
+
+    def as_json(options={})
+      {
+          :values => {
+              :strength => modified_str,
+              :dexterity => modified_dex,
+              :charisma => modified_cha,
+              :wisdom => modified_wis,
+              :constitution => modified_con,
+              :intelligence => modified_int
+          },
+          :modifier => {
+              :strength => str_mod,
+              :dexterity => dex_mod,
+              :charisma => cha_mod,
+              :wisdom => wis_mod,
+              :constitution => con_mod,
+              :intelligence => int_mod
+          }
+      }
+    end
   end
 end

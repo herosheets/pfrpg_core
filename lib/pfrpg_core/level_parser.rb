@@ -10,6 +10,10 @@ module PfrpgCore
       return @levels.values.inject(0) { |sum, l| sum + l }
     end
 
+    def levelmap
+      @levels.map { |x| PfrpgCore::Level.new(x) }
+    end
+
     def parse
       levels = {}
       splits = @level_string.split(';')

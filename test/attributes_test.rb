@@ -1,19 +1,9 @@
 require 'minitest/autorun'
 require 'pfrpg_core'
-
+require_relative './test_helper'
 
 class AttributesTest < Minitest::Test
-
-  def basic_attributes
-    {
-        raw_int: 10,
-        raw_wis: 10,
-        raw_dex: 10,
-        raw_con: 10,
-        raw_cha: 10,
-        raw_str: 10
-    }
-  end
+  include TestHelper
 
   def test_max_dex_bonus
     b = basic_attributes

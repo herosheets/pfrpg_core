@@ -16,6 +16,14 @@ module PfrpgCore
       @bonuses = bonuses
     end
 
+    def as_json(options={})
+      skillz = {}
+      @skillz.each do |s|
+        skillz[s.name] = s
+      end
+      skillz
+    end
+
     class InvalidSkillsException < Exception; end
 
     def current_trained_ranks(name)
@@ -34,6 +42,7 @@ module PfrpgCore
       if @level
         s = @skills_per_level + @int_mod
         s += 1 if @race.name == 'Human'
+        s += 1 if @favored_bonus == 'skill'
         return s
       else
         0
@@ -72,15 +81,6 @@ module PfrpgCore
       raise InvalidSkillsException unless valid
     end
 
-    def num_skills
-      skillz = 0
-      if get_last_level
-        skillz = int_mod + @skill_count
-        skillz += 1 if @favored_bonus == 'skill'
-      end
-      return skillz
-    end
-
     def get_all_skills
       skillz = []
       ::PfrpgSkills::Skill.skill_list.each do |skill|
@@ -88,7 +88,6 @@ module PfrpgCore
       end
       skillz
     end
-
 
   end
 end
