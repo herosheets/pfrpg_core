@@ -1,8 +1,10 @@
 require 'minitest/autorun'
 require 'pfrpg_core'
+require 'pfrpg_classes'
+require_relative './test_helper'
 
 class SkillsTest < Minitest::Test
-
+  include TestHelper
   def skill_list
     [
       'Acrobatics',
@@ -21,6 +23,7 @@ class SkillsTest < Minitest::Test
       @skills[skill.downcase] = s
     end
     @skills = { skills: @skills }
+    @c = plain_character
   end
 
   class MockRace
@@ -34,6 +37,10 @@ class SkillsTest < Minitest::Test
     attr_reader :int_mod
     def initialize(int_mod)
       @int_mod =int_mod
+    end
+
+    def method_missing(m, *args, &block)
+      0
     end
   end
 
@@ -50,96 +57,42 @@ class SkillsTest < Minitest::Test
     MockLevel.new(10, 5, 'hp')
   end
 
-  def basic_attributes
-    MockAttributes.new(0)
-  end
-
   def test_basic_skills
     skills = PfrpgCore::Skills.new(
-      @skills,
-      basic_attributes,
-      MockRace.new('Elf'),
-      basic_level,
-      PfrpgCore::Bonuses.new
-    )
+      @skills, @c)
+
     assert skills.current_trained_ranks('Acrobatics') == 0
   end
 
   def test_skills_per_level
+    @c.race = MockRace.new('elf)')
     skills = PfrpgCore::Skills.new(
-        @skills,
-        basic_attributes,
-        MockRace.new('Elf'),
-        basic_level,
-        PfrpgCore::Bonuses.new
-    )
-    assert skills.skills_per_level == 5
+        @skills, @c)
+
+    assert skills.skills_per_level(PfrpgClasses::Fighter.new(1), false) == 2
   end
 
   def test_skills_per_level_human
+    @c.race = MockRace.new('Human')
     skills = PfrpgCore::Skills.new(
-        @skills,
-        basic_attributes,
-        MockRace.new('Human'),
-        basic_level,
-        PfrpgCore::Bonuses.new
-    )
-    assert skills.skills_per_level == 6
+        @skills, @c)
+
+    assert skills.skills_per_level(PfrpgClasses::Fighter.new(1), false) == 3
   end
 
   def test_skills_per_level_int_mod
+    @c.attributes = MockAttributes.new(1)
     skills = PfrpgCore::Skills.new(
-        @skills,
-        MockAttributes.new(1),
-        MockRace.new('Elf'),
-        basic_level,
-        PfrpgCore::Bonuses.new
-    )
-    assert skills.skills_per_level == 6
+        @skills, @c)
+    assert skills.skills_per_level(PfrpgClasses::Fighter.new(1), false) == 4
   end
 
   def test_skills_per_level_int_mod_negative
-    skills = PfrpgCore::Skills.new(
-        @skills,
-        MockAttributes.new(-1),
-        MockRace.new('Human'),
-        basic_level,
-        PfrpgCore::Bonuses.new
-    )
-    assert skills.skills_per_level == 5
+    @c.attributes = MockAttributes.new(-1)
+    skills = PfrpgCore::Skills.new(@skills, @c)
+    puts @c.attributes.int_mod
+    assert skills.skills_per_level(PfrpgClasses::Fighter.new(1), false) == 2
   end
 
-  def test_skills_per_level_favored
-    skills = PfrpgCore::Skills.new(
-        @skills,
-        MockAttributes.new(-1),
-        MockRace.new('Human'),
-        MockLevel.new(10, 5, 'skill'),
-        PfrpgCore::Bonuses.new
-    )
-    assert skills.skills_per_level == 6
-  end
 
-  def test_validate_skill_quantity
-    skills = PfrpgCore::Skills.new(
-        @skills,
-        MockAttributes.new(0),
-        MockRace.new('Human'),
-        basic_level,
-        PfrpgCore::Bonuses.new
-    )
-    assert skills.valid_skill_choice('acrobatics', 10)
-  end
-
-  def test_validate_skill_quantity_over
-    @skills[:skills]['acrobatics']['trained_rank'] = 11
-    skills = PfrpgCore::Skills.new(
-        @skills,
-        MockAttributes.new(0),
-        MockRace.new('Human'),
-        basic_level,
-        PfrpgCore::Bonuses.new
-    )
-    assert !skills.valid_skill_choice('acrobatics', 10)
-  end
 end

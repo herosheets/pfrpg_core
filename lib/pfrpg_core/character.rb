@@ -5,9 +5,9 @@ module PfrpgCore
     include Derived::Magic
     include Derived::Misc
 
-    attr_reader :levels, :class_features, :feats, :inventory,
-                :spells, :attributes, :saves, :alignment, :race, :saves,
-                :demographics, :character_id, :character_uuid, :avatar
+    attr_accessor :levels, :class_features, :feats, :inventory,
+                  :spells, :attributes, :saves, :alignment, :race, :saves,
+                  :demographics, :character_id, :character_uuid, :avatar
 
     def initialize(params)
       generate_effects

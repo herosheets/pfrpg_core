@@ -44,7 +44,7 @@ GEM
     mime-types (2.4.3)
     minitest (5.4.2)
     multi_json (1.10.1)
-    pfrpg_classes (0.0.3)
+    pfrpg_classes (0.0.4)
       rails (~> 4.1.1)
     pfrpg_races (0.0.1)
       rails (~> 4.1.1)
@@ -90,7 +90,7 @@ PLATFORMS
 
 DEPENDENCIES
   minitest
-  pfrpg_classes (= 0.0.3)
+  pfrpg_classes (= 0.0.4)
   pfrpg_core!
   pfrpg_races (= 0.0.1)
   pfrpg_skills (= 0.0.5)

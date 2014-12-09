@@ -64,14 +64,8 @@ module PfrpgCore
         end
       end
 
-      def ac_penalty
-        shield = equipment.find { |x| x.slot == 'shield' }
-        shield_ac  = shield.nil? ? 0 : shield.armor_check_penalty
-        shield_ac ||= 0
-        armor = equipped_armor
-        armor_ac = armor.nil? ? 0 : armor.armor_check_penalty
-        armor_ac ||= 0
-        return shield_ac + armor_ac
+      def get_ac_penalty
+        @inventory.ac_penalty
       end
     end
   end

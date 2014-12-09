@@ -1,18 +1,19 @@
 require 'minitest/autorun'
 require 'pfrpg_core'
+require_relative './test_helper'
 
 class LevelsTest < Minitest::Test
+  include TestHelper
 
-  def basic_saves
-    {
-        fort: 5,
-        ref: 5,
-        will: 5
-    }
+  def setup
+    @c = plain_character
   end
 
-  def test_basc
-    assert false
+  def test_basic
+    assert @c.levels.size == 1
+    assert @c.levels[0].classname == 'Fighter'
+    assert @c.levels[0].rank == 10
+    assert @c.hit_die == 10
   end
 
 end

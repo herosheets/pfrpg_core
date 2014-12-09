@@ -1,30 +1,123 @@
 require 'pfrpg_skills'
 
 module PfrpgCore
+  class PrettySkill
+    include PfrpgCore::Filterable
+    attr_reader :name, :class_skill, :stat_bonus, :ac_penalty,
+                :misc_bonus, :total_bonus, :trained_rank, :attribute,
+                :filters, :filter_str
+
+    def initialize(skill, character, skill_filters)
+      @class_skill   = is_class_skill?(skill, character)
+      @ac_penalty    = calculate_ac_penalty(skill, character)
+      @name          = skill[:skill].description
+      if skill[:char_skill]
+        @trained_rank  = skill[:char_skill]['trained_rank']
+      else
+        @trained_rank = 0
+      end
+      @stat_bonus    = calculate_attribute_bonus(skill, character)
+      @misc_bonus    = calculate_misc_bonus(skill, character)
+      @attribute     = skill[:skill].attribute
+      @total_bonus   = total_bonuses
+      @filters       = skill_filters
+      @filter_str    = []
+      apply_filters
+    end
+
+    def misc_bonus=(misc)
+      @misc_bonus=misc
+    end
+
+    def as_json(options={})
+      {
+          :class_skill  => @class_skill,
+          :ac_penalty   => @ac_penalty,
+          :name         => @name,
+          :trained_rank => @trained_rank,
+          :stat_bonus   => @stat_bonus,
+          :misc_bonus   => @misc_bonus,
+          :total_bonus  => @total_bonus,
+          :attribute    => @attribute
+      }
+    end
+
+    def is_class_skill?(skill, character)
+      found = character.levels.any? do |l|
+        l.heroclass.skills.find { |x| x.to_s == skill[:skill].to_s }
+      end
+      found ||= class_skill_bonuses(character).find do |x|
+        if x
+          x.downcase == skill[:skill].description.downcase
+        else
+          false
+        end
+      end
+      return (found != nil && found)
+    end
+
+    def class_skill_bonuses(character)
+      bonuses = character.get_bonus("class_skill")
+      bonuses ||= []
+      return bonuses
+    end
+
+    def calculate_ac_penalty(skill, character)
+      ac_penalty = 0
+      if skill[:skill].ac_penalty?
+        ac_penalty = character.get_ac_penalty
+      end
+      ac_penalty
+    end
+
+    def calculate_attribute_bonus(skill, character)
+      attribute = skill[:skill].attribute
+      character.attributes.send("#{attribute}_mod") || 0
+    end
+
+    def total_bonuses
+      total = @misc_bonus + @stat_bonus - @ac_penalty + @trained_rank
+      total += 3 if (@class_skill && @trained_rank > 0)
+      total
+    end
+
+    def calculate_misc_bonus(skill, character)
+      if skill[:skill].respond_to? "bonus_str"
+        return character.get_bonus(skill[:skill].bonus_str).to_i
+      else
+        return character.get_bonus(skill[:skill].description).to_i
+      end
+    end
+
+  end
+
   class Skills
     attr_reader :skills, :max_training_level
-    def initialize(skills, attributes, race, level, bonuses)
-      @skills = skills[:skills]
-      @race = race
-      @level = level
-      if @level
-        @max_training_level = level.total
-        @skills_per_level = level.skill_count
-        @favored_bonus = level.favored_bonus
+    def initialize(skills, character)
+      @character = character
+      @skillz    = skills
+      @skills    = get_all_skills.map { |x| PrettySkill.new(x, @character, skill_filters) }
+    end
+
+    def skill_filters
+      [
+          Filters::SkillFocusMod.new(@character)
+      ]
+    end
+
+    def get_all_skills
+      return PfrpgSkills::Skill.skill_list.map do |skill|
+        { :skill => skill, :char_skill => get_skill(skill.description)}
       end
-      @int_mod = attributes.int_mod
-      @bonuses = bonuses
     end
 
     def as_json(options={})
       skillz = {}
-      @skillz.each do |s|
+      @skills.each do |s|
         skillz[s.name] = s
       end
       skillz
     end
-
-    class InvalidSkillsException < Exception; end
 
     def current_trained_ranks(name)
       begin
@@ -35,58 +128,16 @@ module PfrpgCore
     end
 
     def get_skill(name)
-      @skills[name.downcase]
+      @skillz[name.downcase]
     end
 
-    def skills_per_level
-      if @level
-        s = @skills_per_level + @int_mod
-        s += 1 if @race.name == 'Human'
-        s += 1 if @favored_bonus == 'skill'
-        return s
-      else
-        0
-      end
-    end
-
-    def valid_skill_choice(skill_name, quantity)
-      # validate skill name + total trained rank < hit die
-      ::PfrpgSkills::Skill.fetch_by_name(skill_name) &&
-          (current_trained_ranks(skill_name) < @max_training_level)
-    end
-
-    def validate_skill_quantity(skillz, favored)
-      total = 0
-      skillz.keys.each do |k|
-        total += skillz[k]
-      end
-      # TODO is this actuall <= or should it be ==
-      if favored
-        (total <= (skills_per_level + 1))
-      else
-        (total <= skills_per_level)
-      end
-    end
-
-    def validate_skill_payload(skillz)
-      valid = true
-      skillz.keys.each do |k|
-        valid = valid && valid_skill_choice(k, skillz[k])
-      end
-      valid
-    end
-
-    def validate_skills(skillz, favored_bonus)
-      valid = (validate_skill_payload(skillz) && validate_skill_quantity(skillz, favored_bonus))
-      raise InvalidSkillsException unless valid
-    end
-
-    def get_all_skills
-      skillz = []
-      ::PfrpgSkills::Skill.skill_list.each do |skill|
-        skillz << { :skill => skill, :char_skill => get_skill(skill.description)}
-      end
-      skillz
+    def skills_per_level(heroclass, favored_bonus)
+      base = heroclass.skills_per_level
+      i = @character.attributes.int_mod
+      r = ((@character.race.name == 'Human') && 1) || 0 # +1 for Human
+      f = ((favored_bonus == 'skill') && 1) || 0 # +1 for favored
+      # puts "base #{base} + i #{i} + r #{r} + f #{f} = #{base + i + r + f}"
+      return base + i + r + f
     end
 
   end

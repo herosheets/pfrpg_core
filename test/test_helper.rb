@@ -1,3 +1,5 @@
+require 'pfrpg_races'
+
 module TestHelper
   class MockCharacter
 

@@ -47,7 +47,7 @@ module PfrpgCore
       equipment.each do |e|
         ac_penalty += NullObject.maybe(e.armor_check_penalty).to_i
       end
-      ac_penalty += bonuses.get_bonus("ac_penalty").to_i
+      ac_penalty += bonuses.get("ac_penalty").to_i
       ac_penalty = 0 if ac_penalty > 0
       ac_penalty
     end
