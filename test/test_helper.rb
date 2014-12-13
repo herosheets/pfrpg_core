@@ -4,7 +4,9 @@ module TestHelper
   class MockCharacter
 
     attr_accessor :alignent, :race, :attributes, :levels, :bonuses, :saves,
-                  :inventory, :character, :feats, :class_features, :skills
+                  :inventory, :character, :feats, :class_features, :skills,
+                  :base_skills
+    
     def initialize(alignment,
                    race,
                    attributes,
@@ -15,6 +17,7 @@ module TestHelper
                    inventory = PfrpgCore::Inventory.new([],[]),
                    feats = [],
                    class_features = [],
+                   base_skills = {},
                    character = nil)
       @alignment = alignment
       @race = race
@@ -26,6 +29,7 @@ module TestHelper
       @skills = skills
       @feats = feats
       @class_features = class_features
+      @base_skills = base_skills
       @character = character
     end
     include PfrpgCore::Derived::CombatBonuses

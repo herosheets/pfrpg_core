@@ -24,6 +24,7 @@ class SkillsTest < Minitest::Test
     end
     @skills = { skills: @skills }
     @c = plain_character
+    @c.base_skills = @skills
   end
 
   class MockRace
@@ -58,39 +59,34 @@ class SkillsTest < Minitest::Test
   end
 
   def test_basic_skills
-    skills = PfrpgCore::Skills.new(
-      @skills, @c)
+    skills = PfrpgCore::Skills.new(@c)
 
     assert skills.current_trained_ranks('Acrobatics') == 0
   end
 
   def test_skills_per_level
     @c.race = MockRace.new('elf)')
-    skills = PfrpgCore::Skills.new(
-        @skills, @c)
+    skills = PfrpgCore::Skills.new(@c)
 
     assert skills.skills_per_level(PfrpgClasses::Fighter.new(1), false) == 2
   end
 
   def test_skills_per_level_human
     @c.race = MockRace.new('Human')
-    skills = PfrpgCore::Skills.new(
-        @skills, @c)
+    skills = PfrpgCore::Skills.new(@c)
 
     assert skills.skills_per_level(PfrpgClasses::Fighter.new(1), false) == 3
   end
 
   def test_skills_per_level_int_mod
     @c.attributes = MockAttributes.new(1)
-    skills = PfrpgCore::Skills.new(
-        @skills, @c)
+    skills = PfrpgCore::Skills.new(@c)
     assert skills.skills_per_level(PfrpgClasses::Fighter.new(1), false) == 4
   end
 
   def test_skills_per_level_int_mod_negative
     @c.attributes = MockAttributes.new(-1)
-    skills = PfrpgCore::Skills.new(@skills, @c)
-    puts @c.attributes.int_mod
+    skills = PfrpgCore::Skills.new(@c)
     assert skills.skills_per_level(PfrpgClasses::Fighter.new(1), false) == 2
   end
 

@@ -1,11 +1,11 @@
 module PfrpgCore
   class Character
     include PfrpgCore::Bonus
-    include PfrpgCore::Derived::CombatBonuses
+    include Derived::CombatBonuses
     include Derived::Magic
     include Derived::Misc
 
-    attr_accessor :levels, :class_features, :feats, :inventory,
+    attr_accessor :levels, :class_features, :feats, :inventory, :base_skills,
                   :spells, :attributes, :saves, :alignment, :race, :saves,
                   :demographics, :character_id, :character_uuid, :avatar
 
@@ -14,6 +14,7 @@ module PfrpgCore
       @character_uuid = params[:uuid]
       @character_id   = params[:id]
       # TODO: Refactor client to remove @character
+      # computed by calling objects
       @character      = params[:character]
       @avatar         = params[:avatar]
       @demographics   = params[:demographics]
@@ -24,10 +25,11 @@ module PfrpgCore
       @class_features = params[:class_features]
       @inventory      = params[:inventory]
       @spells         = params[:spells]
-      # these objects require bonuses & attributes
+      @combat         = params[:combat]
+      @base_skills    = params[:base_skills]
+      # uncomputable until bonuses are calculated
       @attributes     = PfrpgCore::Attributes.new(params[:attributes], @bonuses)
       @saves          = SavingThrows.new(params[:saves], @bonuses, @attributes)
-      @skills         = Skills.new(params[:skills], @attributes, @race, @levels, @bonuses)
     end
 
     def generate_effects
@@ -45,17 +47,17 @@ module PfrpgCore
 
     def as_json(options={})
       p = {
-          :id           => @character_id, #check
-          :uuid         => @character_uuid, #check
-          :character    => @character, #check
-          :demographics => @demographics, #check
-          :attributes   => @attributes, #check
+          :id           => @character_id,
+          :uuid         => @character_uuid,
+          :character    => @character,
+          :demographics => @demographics,
+          :attributes   => @attributes,
           :combat       => @combat,
-          :saves        => @saves, # check
-          :misc         => misc_json, #check
-          :skills       => @skills,
+          :saves        => @saves,
+          :misc         => misc_json,
+          :skills       => Skills.new(self), # crazy
           :spells       => @spells,
-          :inventory    => @inventory # check
+          :inventory    => @inventory
       }
       p[:avatar] = AvatarURL.new(@avatar) if @avatar
       p

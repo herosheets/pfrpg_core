@@ -58,8 +58,7 @@ module PfrpgCore
 
     def class_skill_bonuses(character)
       bonuses = character.get_bonus("class_skill")
-      bonuses ||= []
-      return bonuses
+      return bonuses || []
     end
 
     def calculate_ac_penalty(skill, character)
@@ -93,9 +92,11 @@ module PfrpgCore
 
   class Skills
     attr_reader :skills, :max_training_level
-    def initialize(skills, character)
+    def initialize(character)
       @character = character
-      @skillz    = skills
+      @bonuses   = character.bonuses
+      @attributes= character.attributes
+      @skillz    = character.base_skills
       @skills    = get_all_skills.map { |x| PrettySkill.new(x, @character, skill_filters) }
     end
 
@@ -133,7 +134,7 @@ module PfrpgCore
 
     def skills_per_level(heroclass, favored_bonus)
       base = heroclass.skills_per_level
-      i = @character.attributes.int_mod
+      i = @attributes.int_mod
       r = ((@character.race.name == 'Human') && 1) || 0 # +1 for Human
       f = ((favored_bonus == 'skill') && 1) || 0 # +1 for favored
       # puts "base #{base} + i #{i} + r #{r} + f #{f} = #{base + i + r + f}"
