@@ -102,7 +102,8 @@ module PfrpgCore
 
     def skill_filters
       [
-          Filters::SkillFocusMod.new(@character)
+          Filters::SkillFocusMod.new(@character),
+          Filters::ProwessMod.new(@character)
       ]
     end
 

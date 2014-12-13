@@ -6,7 +6,7 @@ module TestHelper
     attr_accessor :alignent, :race, :attributes, :levels, :bonuses, :saves,
                   :inventory, :character, :feats, :class_features, :skills,
                   :base_skills
-    
+
     def initialize(alignment,
                    race,
                    attributes,

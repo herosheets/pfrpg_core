@@ -22,23 +22,25 @@ module PfrpgCore
       end
 
       def attacks
-        atk = []
-        character.equipped_weapons.each do |w|
-          atk << Attack.new({    :weapon_name =>  w.get_best_name,
-                                 :range        => w.range,
-                                 :weight_class => w.weight_class,
-                                 :damage       => w.damage,
-                                 :weapon_type  => w.weapon_type,
-                                 :critical_range => w.critical_range,
-                                 :critical_dmg => w.critical_dmg,
-                                 :bonus        => w.bonus,
-                                 :strength_bonus   => str_bonus,
-                                 :bab          => bab,
-                                 :size         => character.race.size,
-                                 :filters      => attack_filters,
-                                 :filter_str   => [],
-                                 :weapon       => w
-                            })
+        macros = Macro.find_available(character)
+
+        character.equipped_weapons.collect do |w|
+          Attack.new({   :weapon_name =>  w.get_best_name,
+                         :range        => w.range,
+                         :weight_class => w.weight_class,
+                         :damage       => w.damage,
+                         :weapon_type  => w.weapon_type,
+                         :critical_range => w.critical_range,
+                         :critical_dmg => w.critical_dmg,
+                         :bonus        => w.bonus,
+                         :strength_bonus   => str_bonus,
+                         :bab          => bab,
+                         :size         => character.race.size,
+                         :filters      => attack_filters,
+                         :filter_str   => [],
+                         :weapon       => w,
+                         :macros       => macros.select { |m| m.applies_to? w }
+                     })
         end
         return atk
       end
