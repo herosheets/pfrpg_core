@@ -9,9 +9,9 @@ module PfrpgCore
       effects = []
       [
         NullObject.maybe(@character.feats),
-        NullObject.maybe(@character.equipment),
-        NullObject.maybe(@character.get_race).traits,
-        NullObject.maybe(@character.get_racial_stat_bonuses)
+        NullObject.maybe(@character.inventory.equipment),
+        NullObject.maybe(@character.race).traits,
+        NullObject.maybe(@character.racial_bonuses)
       ].each do |r|
         r.each do |x|
           effects << x.get_effects

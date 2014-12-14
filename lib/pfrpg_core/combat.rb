@@ -10,14 +10,14 @@ module PfrpgCore
 
     def initialize(character)
       @character = character
-      @str_bonus = NullObject.maybe(character.str_mod)
-      @dex_bonus = NullObject.maybe(character.dex_mod)
+      @str_bonus = NullObject.maybe(character.attributes.str_mod)
+      @dex_bonus = NullObject.maybe(character.attributes.dex_mod)
       @bab = NullObject.maybe(character.get_highest_attack_bonus)
       @weapon_finesse = false
       @dodge_modifier = NullObject.maybe(character.get_dodge_modifier)
       @deflection_modifier = NullObject.maybe(character.get_deflection_modifier)
-      @armor_ac = NullObject.maybe(character.get_armor_ac)
-      @shield_ac = NullObject.maybe(character.get_shield_ac)
+      @armor_ac = NullObject.maybe(character.inventory.get_armor_ac)
+      @shield_ac = NullObject.maybe(character.inventory.get_shield_ac)
       @natural_armor = NullObject.maybe(character.get_natural_armor)
       @size_modifier = NullObject.maybe(character.get_size_modifier)
       @armor_check_penalty = NullObject.maybe(character.get_ac_penalty)

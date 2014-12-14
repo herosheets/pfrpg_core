@@ -71,7 +71,7 @@ class MiscTest < Minitest::Test
   end
 
   def test_total_level_more
-    @c.levels << PfrpgCore::Level.new({name: 'Rogue', number: 5})
+    @c.levels << PfrpgCore::Level.new(Le.new('Rogue', 5, false))
     assert @c.total_level == 15
     assert @c.hit_die == 15
   end

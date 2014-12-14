@@ -8,7 +8,7 @@ module PfrpgCore
 
       def filter(attack)
         if character.feats.find { |x| x.name == 'Weapon Finesse' }
-          modify_attack_for_weapon_finesse(attack, character.dex_mod, character.str_mod)
+          modify_attack_for_weapon_finesse(attack, character.attributes.dex_mod, character.attributes.str_mod)
         end
       end
 

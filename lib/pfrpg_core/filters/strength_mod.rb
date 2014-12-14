@@ -8,7 +8,7 @@ module PfrpgCore
 
       def filter(attack)
         if attack.weapon.applies_strength_dmg?
-          base_mod = character.str_mod
+          base_mod = character.attributes.str_mod
           if(attack.weapon.weight_class == 'Two-handed')
             base_mod = (base_mod * 1.5)
           end

@@ -3,7 +3,11 @@ module PfrpgCore
     attr_reader :level_string, :levels
     def initialize(level_string)
       @level_string = level_string
-      @levels = parse
+      begin
+        @levels = parse
+      rescue Exception
+        @levels = {}
+      end
     end
 
     def total

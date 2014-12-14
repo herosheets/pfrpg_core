@@ -32,7 +32,7 @@ module PfrpgCore
       def get_max_dex_bonus
         max_dex_bonus = 100
         any_max = false
-        equipment.each do |e|
+        @inventory.equipment.each do |e|
           if (e.max_dex_bonus != nil) && (e.max_dex_bonus < max_dex_bonus)
             any_max = true
             max_dex_bonus = e.max_dex_bonus

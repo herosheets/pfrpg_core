@@ -13,7 +13,7 @@ module PfrpgCore
     end
 
     def modify_skill_for_prowess(skill)
-      skill.misc_bonus += character.str_mod
+      skill.misc_bonus += character.attributes.str_mod
     end
   end
 end

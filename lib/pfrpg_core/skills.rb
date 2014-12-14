@@ -97,6 +97,7 @@ module PfrpgCore
       @bonuses   = character.bonuses
       @attributes= character.attributes
       @skillz    = character.base_skills
+      @max_training_level = character.hit_die
       @skills    = get_all_skills.map { |x| PrettySkill.new(x, @character, skill_filters) }
     end
 
@@ -130,7 +131,8 @@ module PfrpgCore
     end
 
     def get_skill(name)
-      @skillz[name.downcase]
+      return @skillz[name.downcase] if @skillz
+      return nil
     end
 
     def skills_per_level(heroclass, favored_bonus)

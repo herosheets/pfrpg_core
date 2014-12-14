@@ -56,8 +56,9 @@ module TestHelper
     }
   end
 
+  Le = Struct.new(:class_name, :class_number, :favored)
   def basic_levels
-    [ PfrpgCore::Level.new({name: 'Fighter', number: 10, favored:true})]
+    [ PfrpgCore::Level.new(Le.new('Fighter', 10, true))]
   end
 
   def plain_character
