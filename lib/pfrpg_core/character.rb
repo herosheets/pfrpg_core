@@ -24,7 +24,7 @@ module PfrpgCore
       @latest_levels  = params[:levels][:latest]
       @alignment      = params[:alignment]
       @feats          = params[:feats]
-      @class_features = params[:class_features]
+      @class_features = params[:features]
       @inventory      = params[:inventory]
       @spells         = params[:spells]
       @base_skills    = params[:base_skills]
