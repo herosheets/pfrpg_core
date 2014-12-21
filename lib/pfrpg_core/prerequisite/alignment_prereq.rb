@@ -1,6 +1,6 @@
 class PfrpgCore::Prerequisite::AlignmentPrereq < PfrpgCore::Prerequisite
   def match(character)
     alignments = PfrpgCore::Alignment.send(@value)
-    alignments.include?(character.alignment)
+    alignments.include?(character.alignment.alignment)
   end
 end

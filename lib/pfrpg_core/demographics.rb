@@ -1,7 +1,8 @@
 module PfrpgCore
   class Demographics
-    attr_reader :player_name, :character_name, :deity, :gender, :height, :weight
-                :description
+    attr_reader :player_name, :character_name, :deity, :gender, :height, :weight,
+                :description, :languages
+
     def initialize(params)
       @player_name    = params[:player_name]
       @character_name = params[:name]
@@ -10,6 +11,7 @@ module PfrpgCore
       @weight         = params[:weight]
       @height         = params[:height]
       @description    = params[:description]
+      @languages      = params[:languages]
     end
 
     def as_json(options={})
@@ -20,7 +22,8 @@ module PfrpgCore
           :gender         => @gender,
           :height         => @height,
           :weight         => @weight,
-          :description    => @description
+          :description    => @description,
+          :languages      => @languages
       }
     end
   end

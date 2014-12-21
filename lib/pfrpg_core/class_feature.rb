@@ -10,7 +10,7 @@ module PfrpgCore
       @effects      = params[:effects]
       @type         = params[:type]
       @category     = params[:category]
-      @name         = params[:special]
+      @special      = params[:special]
     end
 
     def as_json(options={})

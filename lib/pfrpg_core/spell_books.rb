@@ -1,16 +1,23 @@
 module PfrpgCore
   class SpellBooks
 
+    class InvalidClassException < Exception; end
+    class SpellNotFoundException < Exception; end
+    class TooManySpellsException < Exception; end
+    class InvalidSpellException < Exception; end
+    class TooLowAttributeException < Exception; end
+
     attr_reader :sorcerer, :cleric, :wizard, :druid, :paladin,
                 :ranger, :bard
-    def initialize(books)
-      @sorcerer = books[:sorcerer]
-      @cleric   = books[:cleric]
-      @wizard   = books[:wizard]
-      @druid    = books[:druid]
-      @paladin  = books[:paladin]
-      @ranger   = books[:ranger]
-      @bard     = books[:bard]
+    def initialize(character)
+      l = character.latest_levels
+      @wizard = character.spells_per_level('Wizard', l)
+      @cleric = character.spells_per_level('Cleric', l)
+      @druid = character.spells_per_level('Druid', l)
+      @paladin = character.spells_per_level('Paladin', l)
+      @ranger = character.spells_per_level('Ranger', l)
+      @bard = character.spells_per_level('Bard', l)
+      @sorcerer = character.known_sorcerer_spells
     end
 
     def as_json(options={})
@@ -24,5 +31,6 @@ module PfrpgCore
           :Bard      => @bard
       }
     end
+
   end
 end

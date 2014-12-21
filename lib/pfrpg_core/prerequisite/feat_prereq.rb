@@ -1,6 +1,6 @@
 class PfrpgCore::Prerequisite::FeatPrereq < PfrpgCore::Prerequisite
   def match(character)
-    found = character.total_feats.find { |x| x.pathfinder_feat.name == @attribute }
+    found = character.feats.find { |x| x.name == @attribute }
     return (found != nil)
   rescue Exception => e
     # ap character.total_feats

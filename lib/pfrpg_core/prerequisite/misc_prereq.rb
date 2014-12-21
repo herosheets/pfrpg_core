@@ -11,7 +11,7 @@ class PfrpgCore::Prerequisite::MiscPrereq < PfrpgCore::Prerequisite
       when "divine"
         return character.can_divine?
       when "size"
-        return character.racial_size.upcase == @value.upcase
+        return character.race.size.upcase == @value.upcase
       end
     rescue Exception => e
       #ap "Exception: "

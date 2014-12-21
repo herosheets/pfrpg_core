@@ -96,9 +96,9 @@ module PfrpgCore
       @character = character
       @bonuses   = character.bonuses
       @attributes= character.attributes
-      @skillz    = character.base_skills
+      @skillz    = character.base_skills || []
       @max_training_level = character.hit_die
-      @skills    = get_all_skills.map { |x| PrettySkill.new(x, @character, skill_filters) }
+      @skills    = @skillz.map { |x| PrettySkill.new(x, @character, skill_filters) }
     end
 
     def skill_filters
@@ -106,12 +106,6 @@ module PfrpgCore
           Filters::SkillFocusMod.new(@character),
           Filters::ProwessMod.new(@character)
       ]
-    end
-
-    def get_all_skills
-      return PfrpgSkills::Skill.skill_list.map do |skill|
-        { :skill => skill, :char_skill => get_skill(skill.description)}
-      end
     end
 
     def as_json(options={})
@@ -124,15 +118,14 @@ module PfrpgCore
 
     def current_trained_ranks(name)
       begin
-        get_skill(name)['trained_rank']
+        get_skill(name).trained_rank
       rescue Exception => e
         return 0
       end
     end
 
     def get_skill(name)
-      return @skillz[name.downcase] if @skillz
-      return nil
+      @skills.find { |x| x.name.downcase[name.downcase] }
     end
 
     def skills_per_level(heroclass, favored_bonus)

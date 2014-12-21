@@ -1,5 +1,5 @@
 class PfrpgCore::Prerequisite::LanguagePrereq < PfrpgCore::Prerequisite
   def match(character)
-    character.languages.include?(@value)
+    character.demographics.languages.include?(@value)
   end
 end

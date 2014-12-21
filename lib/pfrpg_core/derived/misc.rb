@@ -68,9 +68,12 @@ module PfrpgCore
       end
 
       def get_class_level(heroclass)
-        l = latest_levels[heroclass.name]
-        l ||= 0
-        return l
+        l = latest_levels.find { |x| x.class_name[heroclass.name] }
+        if l
+          return l.class_number
+        else
+          return 0
+        end
       end
 
       def explode_levels
@@ -85,12 +88,10 @@ module PfrpgCore
       def get_caster_level
         # TODO constantize somewhere better
         caster_classes = ['Bard', 'Cleric', 'Druid', 'Paladin', 'Ranger', 'Sorcerer', 'Wizard']
-        caster_levels = []
-        latest_levels.keys.each do |key|
-          caster_levels << latest_levels[key] if caster_classes.include? key
-        end
-        ek_level = get_class_level(Heroclass.by_name('Eldritch Knight'))
-        return (caster_levels.max + ek_level) || 0
+        caster_levels = latest_levels.select { |x| caster_classes.include? x.class_name }
+        max_caster_level = caster_levels.map { |x| x.class_number }.max || 0
+        ek_level = get_class_level(PfrpgClasses::Heroclass.by_name('Eldritch Knight'))
+        return (max_caster_level + ek_level) || 0
       end
 
       def misc_json

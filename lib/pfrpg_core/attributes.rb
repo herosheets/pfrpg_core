@@ -1,11 +1,11 @@
 module PfrpgCore
   class Attributes
 
-    attr_reader :raw_int, :raw_dex, :raw_str,
+    attr_accessor :raw_int, :raw_dex, :raw_str,
                 :raw_con, :raw_wis, :raw_cha,
                 :max_dex
 
-    def initialize(attributes, bonuses)
+    def initialize(attributes,bonuses=Bonuses.new)
       @raw_int = attributes[:raw_int]
       @raw_con = attributes[:raw_con]
       @raw_str = attributes[:raw_str]
@@ -13,6 +13,10 @@ module PfrpgCore
       @raw_cha = attributes[:raw_cha]
       @raw_dex = attributes[:raw_dex]
       @max_dex = attributes[:max_dex] || 1000
+      @bonuses = bonuses
+    end
+
+    def set_bonuses(bonuses)
       @bonuses = bonuses
     end
 

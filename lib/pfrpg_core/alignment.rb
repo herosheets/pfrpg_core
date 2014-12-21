@@ -21,18 +21,23 @@ module PfrpgCore
     end
 
     def self.parse(alignment_str)
-      h = {
-          'CN' => "Chaotic Neutral",
-          'CE' => "Chaotic Evil",
-          'CG' => "Chaotic Good",
-          'NE' => "Neutral Evil",
-          "TN" => "True Neutral",
-          "NG" => "Neutral Good",
-          "LE" => "Lawful Evil",
-          "LG" => "Lawful Good",
-          "LN" => "Lawful Neutral"
-      }
-      return h[alignment_str] || "None"
+      return "None" unless alignment_str
+      if alignment_str.length == 2
+        h = {
+            'CN' => "Chaotic Neutral",
+            'CE' => "Chaotic Evil",
+            'CG' => "Chaotic Good",
+            'NE' => "Neutral Evil",
+            "TN" => "True Neutral",
+            "NG" => "Neutral Good",
+            "LE" => "Lawful Evil",
+            "LG" => "Lawful Good",
+            "LN" => "Lawful Neutral"
+        }
+        return h[alignment_str] || "None"
+      else
+        return alignment_str
+      end
     end
 
     def self.any

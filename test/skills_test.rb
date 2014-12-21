@@ -17,14 +17,13 @@ class SkillsTest < Minitest::Test
   end
 
   def setup
-    @skills = {}
-    skill_list.each do |skill|
-      s = { 'trained_rank' => 0 }
-      @skills[skill.downcase] = s
-    end
-    @skills = { skills: @skills }
     @c = plain_character
-    @c.base_skills = @skills
+    @c.base_skills = skill_list.map do |skill|
+      return {
+        char_skill: { 'trained_rank'=> 0, name: skill },
+        skill: skill
+      }
+    end
   end
 
   class MockRace
