@@ -24,7 +24,7 @@ module PfrpgCore
       def attacks
         macros = Macro.find_available(character)
 
-        character.equipped_weapons.collect do |w|
+        atk = character.inventory.equipped_weapons.collect do |w|
           Attack.new({   :weapon_name =>  w.get_best_name,
                          :range        => w.range,
                          :weight_class => w.weight_class,

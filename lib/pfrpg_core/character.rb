@@ -33,6 +33,7 @@ module PfrpgCore
       # uncomputable until bonuses are calculated
       apply_bonuses
       @attributes.set_bonuses(@bonuses)
+      @attributes.max_dex = self.get_max_dex_bonus
       @saves          = SavingThrows.new(params[:saves], @bonuses, @attributes)
       @combat         = PfrpgCore::Combat.new(self)
       @skills         = PfrpgCore::Skills.new(self)

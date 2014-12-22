@@ -7,7 +7,7 @@ module PfrpgCore
       end
 
       def filter(attack)
-        f = character.char_feats.find { |x| x.pathfinder_feat.name == 'Weapon Specialization' }
+        f = character.feats.find { |x| x.name == 'Weapon Specialization' }
         if f != nil && attack.weapon.name == f.feat_special
           modify(a)
         end

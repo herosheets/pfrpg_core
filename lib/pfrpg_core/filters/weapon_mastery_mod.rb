@@ -1,12 +1,12 @@
 class PfrpgCore::WeaponMasteryMod
-  attr_reader :character, :feature
-  def initialize(character, feature)
+  attr_reader :character, :special
+  def initialize(character, special)
     @character = character
-    @feature   = feature
+    @special   = special
   end
 
   def filter(attack)
-    if attack.weapon.name == @feature.weapon_type
+    if attack.weapon.name == @special
       modify(attack)
     end
   end
@@ -21,4 +21,3 @@ class PfrpgCore::WeaponMasteryMod
     "#{crit_num}x"
   end
 end
-

@@ -2,7 +2,7 @@ module PfrpgCore
   class ManyshotMacro < Macro
 
     def available?
-      character.total_feats.any? { |feat| feat.pathfinder_feat.name == 'Manyshot' }
+      character.feats.any? { |feat| feat.name == 'Manyshot' }
     end
 
     def applies_to?(weapon)

@@ -3,7 +3,8 @@ module PfrpgCore
     include Affectable
 
     attr_reader :name, :description, :effects, :category,
-                :special, :type
+                :special, :type, :attack_filter, :armor_filter
+
     def initialize(params)
       @name         = params[:name]
       @description  = params[:description]
@@ -11,6 +12,8 @@ module PfrpgCore
       @type         = params[:type]
       @category     = params[:category]
       @special      = params[:special]
+      @attack_filter= params[:attack_filter]
+      @armor_filter = params[:armor_filter]
     end
 
     def as_json(options={})

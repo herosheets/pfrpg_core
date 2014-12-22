@@ -2,7 +2,7 @@ module PfrpgCore
   class RapidShotMacro < Macro
 
     def available?
-      character.total_feats.any? { |feat| feat.pathfinder_feat.name == 'Rapid Shot' }
+      character.feats.any? { |feat| feat.name == 'Rapid Shot' }
     end
 
     def applies_to?(weapon)

@@ -4,10 +4,9 @@ require 'pfrpg_core'
 
 class AlignmentTest < Minitest::Test
 
-
   def test_abbreviation_parse
     assert PfrpgCore::Alignment.parse("CN") == 'Chaotic Neutral'
-    assert PfrpgCore::Alignment.parse("CNP") == "None"
+    assert PfrpgCore::Alignment.parse("CNP") == "CNP"
   end
 
   def test_unlawful

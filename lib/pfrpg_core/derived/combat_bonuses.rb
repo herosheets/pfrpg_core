@@ -67,6 +67,10 @@ module PfrpgCore
       def get_ac_penalty
         @inventory.ac_penalty
       end
+
+      def get_attack_filters
+        (class_features.collect { |feature| feature.attack_filter }).flatten
+      end
     end
   end
 end

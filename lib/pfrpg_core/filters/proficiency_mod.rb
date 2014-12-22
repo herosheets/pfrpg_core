@@ -7,11 +7,11 @@ module PfrpgCore
       end
 
       def filter(attack)
-        proficiency = Specializer.new(character)
+        proficiency = PfrpgCore::Specializer.new(character)
         unless proficiency.is_proficient_in_weapon? attack.weapon
           modify_for_weapon(attack)
         end
-        armor = character.armor_and_shield
+        armor = character.inventory.armor_and_shield
         armor.each do |a|
           unless proficiency.is_proficient_in_armor? a
             modify_for_armor(attack, a)

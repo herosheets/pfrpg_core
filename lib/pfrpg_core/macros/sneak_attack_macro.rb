@@ -5,11 +5,11 @@ module PfrpgCore
       super
 
       sneak_attack_features = character.class_features.select do |feature|
-        feature.ability_name.start_with? 'sneakattack'
+        feature.name.downcase.start_with? 'sneak a'
       end
 
       @sneak_attack_level = sneak_attack_features.map do |feature|
-        /sneakattack(\d+)d6/.match(feature.ability_name)[1].to_i
+        /Sneak Attack \((\d+)d6\)/.match(feature.name)[1].to_i
       end.max || 0
     end
 

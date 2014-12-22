@@ -7,7 +7,7 @@ module PfrpgCore
       end
 
       def filter(skill)
-        prof_feats = character.char_feats.select { |x| x.pathfinder_feat.name == 'Skill Focus' }
+        prof_feats = character.feats.select { |x| x.name == 'Skill Focus' }
         skills = []
         prof_feats.each do |f|
           skills << f.feat_special

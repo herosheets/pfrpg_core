@@ -7,8 +7,8 @@ module PfrpgCore
       end
 
       def filter(attack)
-        f = character.char_feats.find { |x| x.pathfinder_feat.name == 'Weapon Focus' }
-        if f != nil && (attack.weapon.name.downcase == f.feat_special.downcase)
+        f = character.feats.find { |x| x.name == 'Weapon Focus' }
+        if f != nil && (attack.weapon.name.downcase == f.special.downcase)
           modify(attack)
         end
         return attack

@@ -2,8 +2,7 @@ module PfrpgCore
   class Attributes
 
     attr_accessor :raw_int, :raw_dex, :raw_str,
-                :raw_con, :raw_wis, :raw_cha,
-                :max_dex
+                  :raw_con, :raw_wis, :raw_cha, :max_dex
 
     def initialize(attributes,bonuses=Bonuses.new)
       @raw_int = attributes[:raw_int]

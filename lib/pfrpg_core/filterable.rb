@@ -4,7 +4,7 @@ module PfrpgCore::Filterable
       begin
         self.filter_str << "Filtering #{f.class}"
         f.filter(self)
-      rescue Exception => e
+      rescue Exception
       end
     end
   end
