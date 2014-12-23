@@ -8,7 +8,7 @@ module PfrpgCore
       end
 
       def filter(attack)
-        trainer = Cheesewhiz.new(character)
+        trainer = PfrpgCore::WeaponTrainingCalculator.new(character)
         trained = trainer.trained_value(attack.weapon, feature)
         modify(attack, trained)
       end

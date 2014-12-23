@@ -47,13 +47,13 @@ module PfrpgCore
         l.heroclass.skills.find { |x| x.to_s == skill[:skill].to_s }
       end
       found ||= class_skill_bonuses(character).find do |x|
-        if x
-          x.downcase == skill[:skill].description.downcase
-        else
-          false
-        end
+          if x
+            x.downcase == skill[:skill].description.downcase
+          else
+            false
+          end
       end
-      return (found != nil && found)
+      return (found != nil)
     end
 
     def class_skill_bonuses(character)

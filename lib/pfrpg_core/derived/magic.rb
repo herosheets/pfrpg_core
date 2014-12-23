@@ -47,10 +47,10 @@ module PfrpgCore
 
       def known_sorcerer_spells
         spells = []
-        sorc = class_features.select { |x| x.type == 'Sorcerer Spells Known' }
+        sorc = class_features.select { |x| x.type == 'SorcererSpells' }
         sorc.each do |x|
-          x.spells.each do |spell|
-            spells << Spell.find_by_name(spell)
+          x.special.each do |spell|
+            spells << spell
           end
         end
         return spells
@@ -61,7 +61,7 @@ module PfrpgCore
       end
 
       def arcane_school
-        class_features.find { |x| x.type == 'Arcane School' }
+        class_features.find { |x| x.type == 'ArcaneSchool' }
       end
 
       def can_arcane?

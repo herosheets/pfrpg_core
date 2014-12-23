@@ -21,12 +21,13 @@ module PfrpgCore
       @demographics   = params[:demographics]
       @race           = params[:race][:race]
       @racial_bonuses = params[:race][:bonuses]
-      @attributes     = PfrpgCore::Attributes.new(params[:attributes], @racial_bonuses)
+      prime_bonuses_with_racial_stats
+      @attributes     = PfrpgCore::Attributes.new(params[:attributes], @bonuses)
       @levels         = params[:levels][:latest].map { |x| PfrpgCore::Level.new(x) }
       @latest_levels  = params[:levels][:latest]
       @alignment      = params[:alignment]
       @feats          = params[:feats]
-      @class_features = params[:features]
+      @class_features = FeatureDuplicator.filter_duplicates(params[:features])
       @inventory      = params[:inventory]
       @base_skills    = params[:base_skills]
       @spellbooks     = params[:spellbooks]
@@ -40,10 +41,17 @@ module PfrpgCore
       @spells         = PfrpgCore::SpellBooks.new(self)
     end
 
-    def apply_bonuses
+    def prime_bonuses_with_racial_stats
       @bonuses = PfrpgCore::Bonuses.new
-      @effects = PfrpgCore::EffectTotaler.new(self).effects
-      e = PfrpgCore::EffectProcessor.new(self, @effects)
+      apply_effects(@racial_bonuses.map { |x| x.get_effects }.flatten)
+    end
+
+    def apply_bonuses
+      apply_effects(PfrpgCore::EffectTotaler.new(self).effects)
+    end
+
+    def apply_effects(effects)
+      e = PfrpgCore::EffectProcessor.new(self, effects)
       e.process_effects.each do |effect|
         effect.apply(self)
       end

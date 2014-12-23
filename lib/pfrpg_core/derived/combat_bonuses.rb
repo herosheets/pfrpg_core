@@ -65,11 +65,13 @@ module PfrpgCore
       end
 
       def get_ac_penalty
-        @inventory.ac_penalty
+        @inventory.ac_penalty(self.bonuses)
       end
 
       def get_attack_filters
-        (class_features.collect { |feature| feature.attack_filter }).flatten
+        base = class_features.select { |x| x.attack_filter != nil }
+        filter_classes = base.collect { |x| [x,x.attack_filter] }
+        filter_classes.map { |x| x[1].new(self,x[0])}
       end
     end
   end

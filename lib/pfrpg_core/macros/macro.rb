@@ -15,7 +15,8 @@ module PfrpgCore
     end
 
     def slug
-      self.class.name.split('Macro').first
+      name = self.class.name.split("PfrpgCore::")[1]
+      name.split('Macro').first
     end
 
     def name
@@ -53,3 +54,9 @@ module PfrpgCore
     end
   end
 end
+
+require 'pfrpg_core/macros/manyshot_macro'
+require 'pfrpg_core/macros/power_attack_macro'
+require 'pfrpg_core/macros/rapid_shot_macro'
+require 'pfrpg_core/macros/sneak_attack_macro'
+require 'pfrpg_core/macros/vital_strike_macro'

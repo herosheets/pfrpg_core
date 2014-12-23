@@ -11,7 +11,6 @@ module PfrpgCore
         NullObject.maybe(@character.feats),
         NullObject.maybe(@character.inventory.equipment),
         NullObject.maybe(@character.race).traits,
-        NullObject.maybe(@character.racial_bonuses),
         NullObject.maybe(@character.class_features)
       ].each do |r|
         r.each do |x|

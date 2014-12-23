@@ -102,5 +102,12 @@ module PfrpgCore
           }
       }
     end
+
+    alias_method :constitution, :modified_con
+    alias_method :strength, :modified_str
+    alias_method :wisdom, :modified_wis
+    alias_method :intelligence, :modified_int
+    alias_method :dexterity, :modified_dex
+    alias_method :charisma, :modified_cha
   end
 end

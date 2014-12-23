@@ -1,8 +1,8 @@
-class PfrpgCore::WeaponMasteryMod
+class PfrpgCore::Filters::WeaponMasteryMod
   attr_reader :character, :special
-  def initialize(character, special)
+  def initialize(character, feature)
     @character = character
-    @special   = special
+    @special   = feature.special
   end
 
   def filter(attack)
