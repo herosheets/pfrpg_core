@@ -1,6 +1,6 @@
 module PfrpgCore
   class ClassFeature
-    include Affectable
+    include PfrpgUtility::Affectable
 
     attr_reader :name, :description, :effects, :category,
                 :special, :type, :attack_filter, :armor_filter,

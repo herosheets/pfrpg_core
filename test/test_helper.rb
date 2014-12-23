@@ -1,4 +1,5 @@
 require 'pfrpg_races'
+require 'pfrpg_utility'
 
 module TestHelper
   class MockCharacter
@@ -67,7 +68,7 @@ module TestHelper
     @saves = PfrpgCore::SavingThrows.new(basic_saves, @bonuses, @attributes)
     @levels = basic_levels
 
-    return MockCharacter.new(PfrpgCore::Alignment.new("CN"),
+    return MockCharacter.new(PfrpgUtility::Alignment.new("CN"),
                            PfrpgRaces::Race.fetch('Human'),
                            @attributes,
                            @levels,

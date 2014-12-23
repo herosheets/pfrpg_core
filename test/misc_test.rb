@@ -1,6 +1,5 @@
 require 'minitest/autorun'
 require 'pfrpg_core'
-require 'pfrpg_races'
 require_relative  './test_helper'
 
 class MiscTest < Minitest::Test

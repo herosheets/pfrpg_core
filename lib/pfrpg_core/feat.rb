@@ -1,6 +1,6 @@
 module PfrpgCore
   class Feat
-    include Affectable
+    include PfrpgUtility::Affectable
     attr_reader :name, :description, :effects, :prereqs,
                 :special, :type, :source
 

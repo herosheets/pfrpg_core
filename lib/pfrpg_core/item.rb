@@ -1,6 +1,6 @@
 module PfrpgCore
   class Item
-    include Affectable
+    include PfrpgUtility::Affectable
     attr_reader :name, :description, :slot, :type, :equipped, :effects,
                 :cost, :dmg_s, :dmg_m, :critical_range, :critical_dmg,
                 :range, :weight, :dmg_type, :special, :source, :weapon_type,
