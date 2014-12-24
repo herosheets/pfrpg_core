@@ -7,7 +7,7 @@ GEM
   remote: https://rubygems.org/
   specs:
     minitest (5.4.2)
-    pfrpg_classes (0.1.2)
+    pfrpg_classes (0.1.3)
     pfrpg_races (0.1.2)
     pfrpg_skills (0.1.1)
     pfrpg_utility (0.1.1)
@@ -18,7 +18,7 @@ PLATFORMS
 
 DEPENDENCIES
   minitest
-  pfrpg_classes (= 0.1.2)
+  pfrpg_classes (= 0.1.3)
   pfrpg_core!
   pfrpg_races (= 0.1.2)
   pfrpg_skills (= 0.1.1)
