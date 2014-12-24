@@ -1,6 +1,6 @@
 require 'minitest/autorun'
-require 'pfrpg_core'
 require 'pfrpg_utility'
+require 'pfrpg_core'
 
 class AlignmentTest < Minitest::Test
 

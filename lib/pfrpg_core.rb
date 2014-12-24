@@ -1,8 +1,6 @@
 module PfrpgCore
 end
 
-require 'pfrpg_utility'
-
 require 'pfrpg_core/filters/filter'
 require 'pfrpg_core/macros/macro'
 require 'pfrpg_core/attributes'

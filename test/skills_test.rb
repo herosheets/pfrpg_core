@@ -1,4 +1,5 @@
 require 'minitest/autorun'
+require 'pfrpg_utility'
 require 'pfrpg_core'
 require 'pfrpg_classes'
 require_relative './test_helper'
