@@ -1,4 +1,4 @@
-module PfrpgTables
+module PfrpgCore
   class FeatTotaler
     attr_reader :entity, :levels
     def initialize(entity)

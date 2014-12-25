@@ -1,4 +1,4 @@
-module PfrpgTables
+module PfrpgCore
   class EquipmentTotaler
     attr_reader :entity, :levels
     def initialize(entity)
