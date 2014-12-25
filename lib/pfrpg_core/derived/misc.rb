@@ -5,7 +5,7 @@ module PfrpgCore
       def level_string
         str = "#{@alignment} :"
         @levels.each do |l|
-          str += "#{l.name}/#{l.rank}"
+          str += "#{l.classname}/#{l.rank}"
           str += "*" if l.favored
         end
         str
@@ -97,7 +97,7 @@ module PfrpgCore
       def misc_json
         {
             :initiative     => initiative,
-            :alignment      => @alignment,
+            :alignment      => @alignment.alignment,
             :speed          => speed,
             :hit_points     => hit_points,
             :feats          => @feats,

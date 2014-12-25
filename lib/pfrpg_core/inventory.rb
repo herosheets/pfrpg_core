@@ -54,8 +54,8 @@ module PfrpgCore
 
     def as_json(options={})
       {
-        equipment: get_equipment,
-        inventory: get_inventory
+        equipment: equipment,
+        inventory: inventory
       }
     end
   end

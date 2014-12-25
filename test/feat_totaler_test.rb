@@ -1,8 +1,10 @@
 require 'minitest/autorun'
 require 'pfrpg_utility'
 require 'pfrpg_core'
+require_relative './test_helper'
 
 class FeatTotalerTest < Minitest::Test
+  include TestHelper
 
   MockFeat = Struct.new(:name) do
     def prereq_code

@@ -32,7 +32,7 @@ module PfrpgCore
     end
 
     def prereq_check(entity, feat)
-      prereqs = Prerequisite.load(feat.prereq_code)
+      prereqs = PfrpgUtility::Prerequisite.load(feat.prereq_code)
       prereqs.all? { |x| x.match(entity) }
     end
 

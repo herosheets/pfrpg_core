@@ -27,5 +27,14 @@ module PfrpgCore
           name: @name
       }
     end
+
+
+    def self.granted_feature(feature_name, class_name)
+      c = PfrpgClasses::Heroclass.by_name(class_name)
+      f = Object::const_get("#{c.feature_type}").new()
+      f.ability_name = feature_name
+      f.class_name = class_name
+      f
+    end
   end
 end
