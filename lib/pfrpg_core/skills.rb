@@ -44,7 +44,9 @@ module PfrpgCore
 
     def is_class_skill?(skill, character)
       found = character.levels.any? do |l|
-        l.heroclass.skills.find { |x| x.to_s == skill[:skill].to_s }
+        (l.heroclass.skills.find { |x| x.to_s == skill[:skill].to_s } ||
+            (l.heroclass.skills.find { |x| x.to_s.downcase['profession']} &&
+                skill[:skill].to_s.downcase['profession']))
       end
       found ||= class_skill_bonuses(character).find do |x|
           if x

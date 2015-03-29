@@ -17,14 +17,37 @@ class SkillsTest < Minitest::Test
     ]
   end
 
+  class MockSkill
+    attr_reader :name
+    def initialize(name)
+      @name = name
+    end
+
+    def ac_penalty?
+      0
+    end
+
+    def description
+      name
+    end
+
+    def attribute
+      'con'
+    end
+
+    def to_s
+      name
+    end
+  end
+
+
+  def make_skills
+    skill_list.map { |x| { char_skill: { 'trained_rank' => 0, name: x }, skill: MockSkill.new(x) }}
+  end
+
   def setup
     @c = plain_character
-    @c.base_skills = skill_list.map do |skill|
-      return {
-        char_skill: { 'trained_rank'=> 0, name: skill },
-        skill: skill
-      }
-    end
+    @c.base_skills = make_skills
   end
 
   class MockRace
@@ -90,5 +113,16 @@ class SkillsTest < Minitest::Test
     assert skills.skills_per_level(PfrpgClasses::Fighter.new(1), false) == 2
   end
 
+  def test_all_professions_are_class_skills
+    skills = PfrpgCore::Skills.new(@c)
+
+    assert s = skills.get_skill('Acrobatics')
+    
+    assert s.is_class_skill?({ skill: MockSkill.new("Profession - Butcher (wis)") } , @c)
+    assert s.is_class_skill?({ skill: MockSkill.new('Profession - Cook (wis)') }, @c)
+    assert s.is_class_skill?({ skill: MockSkill.new('Profession - Courtesan (wis)')} , @c)
+    assert s.is_class_skill?({ skill: MockSkill.new('Profession - Tanner (wis)')} , @c)
+    assert s.is_class_skill?({ skill: MockSkill.new('profession - Nonsense (wis)')}, @c)
+  end
 
 end

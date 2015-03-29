@@ -24,7 +24,7 @@ module PfrpgCore
           description: @description,
           type: @type,
           category: @category,
-          name: @name
+          special: @special
       }
     end
 

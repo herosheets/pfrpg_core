@@ -3,7 +3,7 @@ module PfrpgCore
     module Misc
 
       def level_string
-        str = "#{@alignment} :"
+        str = "#{@alignment.alignment} :"
         @levels.each do |l|
           str += "#{l.classname}/#{l.rank}"
           str += "*" if l.favored
@@ -94,6 +94,14 @@ module PfrpgCore
         return (max_caster_level + ek_level) || 0
       end
 
+      def gets_familiar?
+        (@class_features.find { |x| x.type == 'ArcaneBond' && x.ability_name == 'Familiar' }) != nil
+      end
+
+      def gets_companion?
+        (@class_features.find { |x| x.type == 'NatureBond' && x.ability_name == 'Animal Companion' }) != nil
+      end
+
       def misc_json
         {
             :initiative     => initiative,
@@ -106,6 +114,8 @@ module PfrpgCore
             :total_level    => @total_level,
             :size           => size,
             :level_string   => level_string,
+            :has_familiar   => gets_familiar?,
+            :has_companion  => gets_companion?,
             :temporary      => @character.temp_values
         }
       end
