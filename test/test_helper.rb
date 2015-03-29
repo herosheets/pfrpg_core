@@ -62,6 +62,10 @@ module TestHelper
     [ PfrpgCore::Level.new(Le.new('Fighter', 10, true))]
   end
 
+  def wizard_levels
+    [ PfrpgCore::Level.new(Le.new('Wizard', 10, true))]
+  end
+
   def plain_character
     @bonuses = PfrpgCore::Bonuses.new
     @attributes = PfrpgCore::Attributes.new(basic_attributes, @bonuses)
@@ -74,5 +78,19 @@ module TestHelper
                            @levels,
                            @bonuses,
                            @saves)
+  end
+
+  def plain_wizard
+    @bonuses = PfrpgCore::Bonuses.new
+    @attributes = PfrpgCore::Attributes.new(basic_attributes, @bonuses)
+    @saves = PfrpgCore::SavingThrows.new(basic_saves, @bonuses, @attributes)
+    @levels = wizard_levels
+
+    return MockCharacter.new(PfrpgUtility::Alignment.new("CN"),
+                             PfrpgRaces::Race.fetch('Human'),
+                             @attributes,
+                             @levels,
+                             @bonuses,
+                             @saves)
   end
 end

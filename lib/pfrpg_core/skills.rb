@@ -42,11 +42,21 @@ module PfrpgCore
       }
     end
 
+    def professional(class_skills, skill)
+      class_skills.find { |x| x.to_s.downcase['profession']} &&
+          skill[:skill].to_s.downcase['profession']
+    end
+
+    def crafty(class_skills, skill)
+      class_skills.find { |x| x.to_s.downcase['craft']} &&
+          skill[:skill].to_s.downcase['craft']
+    end
+
     def is_class_skill?(skill, character)
       found = character.levels.any? do |l|
         (l.heroclass.skills.find { |x| x.to_s == skill[:skill].to_s } ||
-            (l.heroclass.skills.find { |x| x.to_s.downcase['profession']} &&
-                skill[:skill].to_s.downcase['profession']))
+          professional(l.heroclass.skills, skill) ||
+            crafty(l.heroclass.skills, skill))
       end
       found ||= class_skill_bonuses(character).find do |x|
           if x

@@ -125,4 +125,18 @@ class SkillsTest < Minitest::Test
     assert s.is_class_skill?({ skill: MockSkill.new('profession - Nonsense (wis)')}, @c)
   end
 
+  def test_all_crafts_are_class_skills
+    c = plain_wizard
+    c.base_skills = make_skills
+    skills = PfrpgCore::Skills.new(c)
+
+    assert s = skills.get_skill('Acrobatics')
+
+    assert s.is_class_skill?({ skill: MockSkill.new("Craft Alchemy (int)") } , @c)
+    assert s.is_class_skill?({ skill: MockSkill.new('Craft Armor (int)') }, @c)
+    assert s.is_class_skill?({ skill: MockSkill.new('Craft Locks (int)')} , @c)
+    assert s.is_class_skill?({ skill: MockSkill.new('craft Anything I want (int)')} , @c)
+    assert s.is_class_skill?({ skill: MockSkill.new('Craft Weapons (int)')}, @c)
+  end
+
 end
