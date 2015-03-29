@@ -45,7 +45,11 @@ module PfrpgCore
     def ac_penalty(bonuses = Bonuses.new)
       ac_penalty = 0
       equipment.each do |e|
-        ac_penalty += NullObject.maybe(e.armor_check_penalty).to_i
+        base = NullObject.maybe(e.armor_check_penalty).to_i
+        if (e.masterwork && base < 0 && (e.bonus == nil || e.bonus == 0))
+          base += 1
+        end
+        ac_penalty += base
       end
       ac_penalty += bonuses.get("ac_penalty").to_i
       ac_penalty = 0 if ac_penalty > 0

@@ -78,7 +78,7 @@ module PfrpgCore
       if skill[:skill].ac_penalty?
         ac_penalty = character.get_ac_penalty
       end
-      ac_penalty
+      return (-1 * ac_penalty)
     end
 
     def calculate_attribute_bonus(skill, character)

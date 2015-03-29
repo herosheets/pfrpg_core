@@ -15,7 +15,8 @@ module PfrpgCore
             PfrpgCore::Filters::RangedAttackMod.new(character),
             PfrpgCore::Filters::WeaponFocusMod.new(character),
             PfrpgCore::Filters::WeaponSpecializationMod.new(character),
-            PfrpgCore::Filters::ProficiencyMod.new(character)
+            PfrpgCore::Filters::ProficiencyMod.new(character),
+            PfrpgCore::Filters::MasterworkMod.new(character)
         ]
         standard_filters << character.get_attack_filters
         standard_filters.flatten
@@ -26,6 +27,7 @@ module PfrpgCore
 
         atk = character.inventory.equipped_weapons(character.levels).collect do |w|
           Attack.new({   :weapon_name =>  w.get_best_name,
+                         :masterwork =>  w.masterwork,
                          :range        => w.range,
                          :weight_class => w.weight_class,
                          :damage       => w.damage,
