@@ -3,9 +3,9 @@ require 'pfrpg_skills'
 module PfrpgCore
   class PrettySkill
     include PfrpgCore::Filterable
-    attr_reader :name, :class_skill, :stat_bonus, :ac_penalty,
-                :misc_bonus, :total_bonus, :trained_rank, :attribute,
-                :filters, :filter_str
+    attr_accessor :name, :class_skill, :stat_bonus, :ac_penalty,
+                  :misc_bonus, :total_bonus, :trained_rank, :attribute,
+                  :filters, :filter_str
 
     def initialize(skill, character, skill_filters)
       @class_skill   = is_class_skill?(skill, character)
@@ -19,10 +19,10 @@ module PfrpgCore
       @stat_bonus    = calculate_attribute_bonus(skill, character)
       @misc_bonus    = calculate_misc_bonus(skill, character)
       @attribute     = skill[:skill].attribute
-      @total_bonus   = total_bonuses
       @filters       = skill_filters
       @filter_str    = []
       apply_filters
+      @total_bonus   = total_bonuses
     end
 
     def misc_bonus=(misc)
