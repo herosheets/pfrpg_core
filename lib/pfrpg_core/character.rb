@@ -73,6 +73,7 @@ module PfrpgCore
           :misc         => misc_json,
           :skills       => @skills,
           :spells       => @spells,
+          :spellbooks   => @spellbooks,
           :inventory    => @inventory
       }
       p[:avatar] = AvatarURL.new(@avatar) if @avatar

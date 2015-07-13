@@ -102,6 +102,14 @@ module PfrpgCore
         (@class_features.find { |x| x.type == 'NatureBond' && x.ability_name == 'Animal Companion' }) != nil
       end
 
+      def plugin_skills
+        skills.skills.map { |x| { name: x.name,
+                                  attribute: x.attribute.upcase,
+                                  rank: x.trained_rank,
+                                  bonus: x.total_bonus }
+        }
+      end
+
       def misc_json
         {
             :initiative     => initiative,
@@ -116,7 +124,8 @@ module PfrpgCore
             :level_string   => level_string,
             :has_familiar   => gets_familiar?,
             :has_companion  => gets_companion?,
-            :temporary      => @character.temp_values
+            :temporary      => @character.temp_values,
+            :plugin_skills  => plugin_skills
         }
       end
     end

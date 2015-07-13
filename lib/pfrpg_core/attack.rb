@@ -5,7 +5,7 @@ module PfrpgCore
     attr_accessor :weapon_name, :range, :damage, :weapon_type,
                   :base_bonus, :weapon_bonus, :weight_class, :critical_range,
                   :critical_dmg, :size, :weapon, :other_bonus, :filter_str,
-                  :strength_bonus, :bab, :macros, :masterwork
+                  :strength_bonus, :bab, :macros, :masterwork, :damage_type
 
     def initialize(args)
       @weapon_name    = args[:weapon_name]
@@ -24,6 +24,7 @@ module PfrpgCore
       @weapon         = args[:weapon]
       @macros         = args[:macros]
       @masterwork     = args[:masterwork]
+      @damage_type    = args[:damage_type]
       @other_bonus    = 0 # things like weapon spec, training, etc
       apply_filters
     end
@@ -54,6 +55,7 @@ module PfrpgCore
           :weapon_bonus => @weapon_bonus,
           :strength_bonus   => @strength_bonus,
           :other_bonus  => @other_bonus,
+          :damage_type  => @damage_type,
           :attack_bonus => attack_bonus,
           :filters      => filter_str,
           :macros       => @macros.map { |m| m.as_json }

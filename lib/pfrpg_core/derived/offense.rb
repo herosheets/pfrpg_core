@@ -30,6 +30,7 @@ module PfrpgCore
                          :masterwork =>  w.masterwork,
                          :range        => w.range,
                          :weight_class => w.weight_class,
+                         :damage_type  => w.dmg_type,
                          :damage       => w.damage,
                          :weapon_type  => w.weapon_type,
                          :critical_range => w.critical_range,
