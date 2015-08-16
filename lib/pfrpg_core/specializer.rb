@@ -33,7 +33,7 @@ module PfrpgCore
     end
 
     def read_str(str)
-      str.split(':')[1].split(';')[0]
+      str.split(':')[1].split(';')
     end
 
     def is_proficient_in_weapon?(weapon)
