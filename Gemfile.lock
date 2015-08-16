@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    pfrpg_core (0.1.13)
+    pfrpg_core (0.1.14)
 
 GEM
   remote: https://rubygems.org/
