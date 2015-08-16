@@ -7,9 +7,7 @@ module PfrpgCore
       end
 
       def filter(attack)
-        unless character.feats.find { |x| x.name == 'Weapon Finesse' }
-          modify_attack_for_ranged_attack(attack, character.attributes.dex_mod, character.attributes.str_mod)
-        end
+        modify_attack_for_ranged_attack(attack, character.attributes.dex_mod, character.attributes.str_mod)
       end
 
       def modify_attack_for_ranged_attack(attack, dex, str)
