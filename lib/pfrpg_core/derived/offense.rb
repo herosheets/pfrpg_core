@@ -2,7 +2,11 @@ module PfrpgCore
   module Derived
     module Offense
       def combat_maneuver_bonus
-        base = str_bonus + bab - size_modifier
+        bonus = str_bonus
+        if character.feats.find { |x| x.name == 'Agile Maneuvers' }
+          bonus = dex_bonus
+        end
+        base = bonus + bab - size_modifier
         misc = character.get_bonus('cmb').to_i
         base += misc
         return base
